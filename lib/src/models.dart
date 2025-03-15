@@ -33,7 +33,7 @@ class StartStreamTranscriptionRequest extends TranscribeStreamingRequest {
   ///
   /// For a list of languages supported with Amazon Transcribe streaming, refer
   /// to the [Supported languages](https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html) table.
-  final LanguageCode? languageCode;
+  final String? languageCode;
 
   /// The sample rate of the input audio (in hertz).
   ///
@@ -366,7 +366,7 @@ class StartStreamTranscriptionRequest extends TranscribeStreamingRequest {
   @override
   Map<String, String> toHeaders() => {
         if (languageCode != null)
-          'x-amzn-transcribe-language-code': languageCode!.value,
+          'x-amzn-transcribe-language-code': languageCode!,
         'x-amzn-transcribe-sample-rate': mediaSampleRateHertz.toString(),
         'x-amzn-transcribe-media-encoding': mediaEncoding.value,
         if (vocabularyName != null)
