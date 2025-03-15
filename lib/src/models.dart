@@ -422,7 +422,7 @@ final class StartStreamTranscriptionResponse {
   final String? requestId;
 
   /// Provides the language code that you specified in your request.
-  final LanguageCode? languageCode;
+  final String? languageCode;
 
   /// Provides the sample rate that you specified in your request.
   final int? mediaSampleRateHertz;
@@ -481,7 +481,7 @@ final class StartStreamTranscriptionResponse {
   final String? languageOptions;
 
   /// Provides the preferred language that you specified in your request.
-  final LanguageCode? preferredLanguage;
+  final String? preferredLanguage;
 
   /// Shows whether automatic multi-language identification was enabled
   /// for your transcription.
@@ -529,9 +529,7 @@ final class StartStreamTranscriptionResponse {
       Map<String, String> headers) {
     return StartStreamTranscriptionResponse(
       requestId: headers['x-amzn-request-id'],
-      languageCode: headers['x-amzn-transcribe-language-code'] != null
-          ? LanguageCode.fromValue(headers['x-amzn-transcribe-language-code']!)
-          : null,
+      languageCode: headers['x-amzn-transcribe-language-code'],
       mediaSampleRateHertz: headers['x-amzn-transcribe-sample-rate'] != null
           ? int.parse(headers['x-amzn-transcribe-sample-rate']!)
           : null,
@@ -585,10 +583,7 @@ final class StartStreamTranscriptionResponse {
           ? headers['x-amzn-transcribe-identify-language'] == 'true'
           : null,
       languageOptions: headers['x-amzn-transcribe-language-options'],
-      preferredLanguage: headers['x-amzn-transcribe-preferred-language'] != null
-          ? LanguageCode.fromValue(
-              headers['x-amzn-transcribe-preferred-language']!)
-          : null,
+      preferredLanguage: headers['x-amzn-transcribe-preferred-language'],
       identifyMultipleLanguages:
           headers['x-amzn-transcribe-identify-multiple-languages'] != null
               ? headers['x-amzn-transcribe-identify-multiple-languages'] ==
@@ -604,8 +599,7 @@ final class StartStreamTranscriptionResponse {
   Map<String, dynamic> toHeaders() {
     return <String, dynamic>{
       if (requestId != null) 'x-amzn-request-id': requestId,
-      if (languageCode != null)
-        'x-amzn-transcribe-language-code': languageCode?.value,
+      if (languageCode != null) 'x-amzn-transcribe-language-code': languageCode,
       if (mediaSampleRateHertz != null)
         'x-amzn-transcribe-sample-rate': mediaSampleRateHertz,
       if (mediaEncoding != null)
@@ -645,7 +639,7 @@ final class StartStreamTranscriptionResponse {
       if (languageOptions != null)
         'x-amzn-transcribe-language-options': languageOptions,
       if (preferredLanguage != null)
-        'x-amzn-transcribe-preferred-language': preferredLanguage?.value,
+        'x-amzn-transcribe-preferred-language': preferredLanguage,
       if (identifyMultipleLanguages != null)
         'x-amzn-transcribe-identify-multiple-languages':
             identifyMultipleLanguages,
@@ -654,36 +648,6 @@ final class StartStreamTranscriptionResponse {
       if (vocabularyFilterNames != null)
         'x-amzn-transcribe-vocabulary-filter-names': vocabularyFilterNames,
     };
-  }
-}
-
-/// Possible values for the `languageCode` parameter of a
-/// [StartStreamTranscriptionRequest].
-enum LanguageCode {
-  deDe('de-DE'),
-  enAu('en-AU'),
-  enGb('en-GB'),
-  enUs('en-US'),
-  esUs('es-US'),
-  frCa('fr-CA'),
-  frFr('fr-FR'),
-  hiIn('hi-IN'),
-  itIt('it-IT'),
-  jaJp('ja-JP'),
-  koKr('ko-KR'),
-  ptBr('pt-BR'),
-  thTh('th-TH'),
-  zhCn('zh-CN');
-
-  /// Creates a [LanguageCode] with the given value.
-  const LanguageCode(this.value);
-
-  /// The language code value.
-  final String value;
-
-  /// Returns the [LanguageCode] for the given value.
-  factory LanguageCode.fromValue(String value) {
-    return LanguageCode.values.firstWhere((e) => e.value == value);
   }
 }
 
@@ -899,7 +863,7 @@ final class Result {
   final String? channelId;
 
   /// The language code that represents the language spoken in your stream.
-  final LanguageCode? languageCode;
+  final String? languageCode;
 
   /// The language code of the dominant language identified in your stream.
   ///
@@ -934,9 +898,7 @@ final class Result {
             )
           : null,
       channelId: map['ChannelId'] != null ? map['ChannelId'] as String : null,
-      languageCode: map['LanguageCode'] != null
-          ? LanguageCode.fromValue(map['LanguageCode'] as String)
-          : null,
+      languageCode: map['LanguageCode'],
       languageIdentification: map['LanguageIdentification'] != null
           ? List<LanguageWithScore>.from(
               (map['LanguageIdentification'] as List<dynamic>)
@@ -961,7 +923,7 @@ final class Result {
       'IsPartial': isPartial,
       'Alternatives': alternatives?.map((x) => x.toMap()).toList(),
       'ChannelId': channelId,
-      'LanguageCode': languageCode?.value,
+      'LanguageCode': languageCode,
       'LanguageIdentification':
           languageIdentification?.map((x) => x.toMap()).toList(),
     };
@@ -979,7 +941,7 @@ final class Result {
 /// [LanguageWithScore] result.
 final class LanguageWithScore {
   /// The language code of the identified language.
-  final LanguageCode? languageCode;
+  final String? languageCode;
 
   /// The confidence score associated with the identified language code.
   ///
@@ -996,9 +958,7 @@ final class LanguageWithScore {
   /// Creates a [LanguageWithScore] from the given [Map].
   factory LanguageWithScore.fromMap(Map<String, dynamic> map) {
     return LanguageWithScore(
-      languageCode: map['LanguageCode'] != null
-          ? LanguageCode.fromValue(map['LanguageCode'] as String)
-          : null,
+      languageCode: map['LanguageCode'],
       score: map['Score'] != null ? map['Score'] as double : null,
     );
   }
@@ -1010,7 +970,7 @@ final class LanguageWithScore {
   /// Returns the [Map] representation of this [LanguageWithScore].
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'LanguageCode': languageCode?.value,
+      'LanguageCode': languageCode,
       'Score': score,
     };
   }
