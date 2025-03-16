@@ -8,16 +8,16 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  archive: ^3.0.0
-  aws_common: ^0.6.0
-  aws_signature_v4: ^0.5.0
-  convert: ^3.0.0
-  crypto: ^3.0.0
-  http2: ^2.1.0
-  uuid: ^3.0.0
+  archive: ^4.0.4
+  aws_common: ^0.7.6
+  aws_signature_v4: ^0.6.4
+  convert: ^3.1.2
+  crypto: ^3.0.6
+  http2: ^2.3.1
+  uuid: ^4.5.1
 
 dev_dependencies:
-  lints: ^3.0.0
+  lints: ^5.1.1
 
 topics:
   - aws

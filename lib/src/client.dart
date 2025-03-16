@@ -36,10 +36,11 @@ final class TranscribeStreamingClient {
         StartStreamTranscriptionResponse,
         StreamSink<Uint8List>,
         Stream<TranscriptEvent>,
+        ClientTransportConnection
       )> startStreamTranscription(
     StartStreamTranscriptionRequest request,
   ) async {
-    final (response, audioStreamSink, eventStreamMessages) =
+    final (response, audioStreamSink, eventStreamMessages, connection) =
         await send(request);
 
     return (
@@ -51,6 +52,7 @@ final class TranscribeStreamingClient {
           sink.add(TranscriptEvent.fromJson(utf8.decode(event.payload)));
         },
       )),
+      connection,
     );
   }
 
@@ -61,6 +63,7 @@ final class TranscribeStreamingClient {
         AWSHttpResponse,
         StreamSink<Uint8List>,
         Stream<EventStreamMessage>,
+        ClientTransportConnection
       )> send(
     TranscribeStreamingRequest request,
   ) async {
@@ -226,6 +229,7 @@ final class TranscribeStreamingClient {
       ),
       audioStreamController.sink,
       eventStreamMessageController.stream,
+      connection
     );
   }
 }

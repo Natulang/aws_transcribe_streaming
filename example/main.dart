@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:aws_common/aws_common.dart';
 import 'package:aws_transcribe_streaming/aws_transcribe_streaming.dart';
+import 'package:http2/http2.dart';
 
 void main() async {
   // Create a client.
@@ -20,14 +21,15 @@ void main() async {
   late final StartStreamTranscriptionResponse response;
   late final Stream<TranscriptEvent> transcriptEventStream;
   late final StreamSink<Uint8List> audioStreamSink;
+  late final ClientTransportConnection connection;
   StreamSubscription<Uint8List>? audioStreamSubscription;
 
   try {
     // Start a stream transcription.
-    (response, audioStreamSink, transcriptEventStream) =
+    (response, audioStreamSink, transcriptEventStream, connection) =
         await transcribeStreamingClient.startStreamTranscription(
       const StartStreamTranscriptionRequest(
-        languageCode: LanguageCode.enUs,
+        languageCode: "en-US",
         mediaSampleRateHertz: 48000,
         mediaEncoding: MediaEncoding.pcm,
       ),
